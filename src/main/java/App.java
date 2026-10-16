@@ -19,6 +19,12 @@ public class App {
             this.content = content;
             this.name = name;
         }
+
+        public WiseSaying() {
+            this.id = 0;
+            this.content = "";
+            this.name = "";
+        }
     }
 
     String inputContent() {
@@ -45,7 +51,7 @@ public class App {
         System.out.println("번호 / 작가 / 명언");
         System.out.println("----------------------");
 
-        for (int i = idNum - 2; i >= 0; i--) {
+        for (int i = 99; i >= 0; i--) {
             if (wiseArr[i] == null) continue;
             System.out.println(wiseArr[i].id + " / " + wiseArr[i].name + " / " + wiseArr[i].content);
         }
@@ -87,7 +93,7 @@ public class App {
 
         String json = """
                 {
-                "id": "%d",
+                "id": %d,
                 "content": "%s",
                 "name": "%s"
                 }
@@ -96,13 +102,43 @@ public class App {
         Files.writeString(path, json);
     }
 
+    void setWiseArr() throws IOException{
+        for(int i=1; i<=100; i++) {
+            Path path = Path.of("db/wiseSaying/" + i + ".json");
+
+            if(!Files.exists(path)) continue;
+
+            String[] json = Files.readString(path).split(",");
+
+
+            wiseArr[i-1] = new WiseSaying(parseJsonId(json[0]), parseJsonContent(json[1]), parseJsonText(json[2]));
+        }
+    }
+
+    int parseJsonId(String jsonLine) {
+        String[] parts = jsonLine.split(":");
+        return Integer.parseInt(parts[1].trim());
+    }
+
+    String parseJsonContent(String jsonLine) {
+        String[] parts = jsonLine.split(":");
+        return parts[1].trim().substring(1, parts[1].length()-2);
+    }
+
+    String parseJsonText(String jsonLine) {
+        String[] parts = jsonLine.split(":");
+        return parts[1].trim().substring(1, parts[1].length()-5);
+    }
+
     void run() throws IOException{
 
         System.out.println("== 명언 앱 ==");
 
-        boolean isFinish = true;
+        boolean isFinish = false;
 
-        while (isFinish) {
+        setWiseArr();
+
+        while (!isFinish) {
             System.out.print("명령) ");
 
             String cmd = sc.nextLine();
@@ -113,7 +149,7 @@ public class App {
                     break;
                 case "종료":
                     System.out.println("종료");
-                    isFinish = false;
+                    isFinish = true;
                     break;
                 case "목록":
                     printWise();
