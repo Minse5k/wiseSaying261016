@@ -135,6 +135,14 @@ public class App {
         Files.writeString(path, String.valueOf(lastId));
     }
 
+    void setLastId() throws IOException {
+        Path path = Path.of("db/wiseSaying/lastId.txt");
+
+        if(!Files.exists(path)) return;
+
+        lastId = Integer.parseInt(Files.readString(path));
+    }
+
     void run() throws IOException{
 
         System.out.println("== 명언 앱 ==");
@@ -142,6 +150,7 @@ public class App {
         boolean isFinish = false;
 
         setWiseArr();
+        setLastId();
 
         while (!isFinish) {
             System.out.print("명령) ");
