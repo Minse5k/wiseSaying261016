@@ -12,8 +12,6 @@ public class Main {
             this.name = name;
             this.content = content;
         }
-
-
     }
 
     public static void main(String[] args) {
