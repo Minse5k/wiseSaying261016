@@ -1,8 +1,9 @@
 import java.util.Scanner;
 
 public class Main1 {
+    private static int idNum = 1;
 
-     static String inputContent(Scanner sc) {
+    private static String inputContent(Scanner sc) {
         System.out.print("명언 : ");
         return sc.nextLine();
     }
@@ -13,7 +14,8 @@ public class Main1 {
     }
 
     private static void addWise(String content, String Name) {
-        System.out.println("1번 명언이 등록되었습니다.");
+        System.out.println(idNum + "번 명언이 등록되었습니다.");
+        idNum += 1;
     }
 
     public static void main(String[] args) {
