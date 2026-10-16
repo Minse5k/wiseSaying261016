@@ -58,6 +58,24 @@ public class App {
         }
     }
 
+    void editWise() {
+        System.out.print("?id=");
+        int idx = Integer.parseInt(sc.nextLine());
+
+        if(wiseArr[idx-1] == null) {
+            System.out.println(idx + "번 명언은 존재하지 않습니다.");
+            return;
+        } else {
+            System.out.println("명언(기존) : " + wiseArr[idx-1].content);
+            System.out.print("명언 : ");
+            wiseArr[idx-1].content = sc.nextLine();
+
+            System.out.println("작가(기존) : " + wiseArr[idx-1].name);
+            System.out.print("작가 : ");
+            wiseArr[idx-1].name = sc.nextLine();
+        }
+    }
+
     void run() {
 
         System.out.println("== 명언 앱 ==");
@@ -82,6 +100,9 @@ public class App {
                     break;
                 case "삭제":
                     deleteWise();
+                    break;
+                case "수정":
+                    editWise();
                     break;
             }
         }
