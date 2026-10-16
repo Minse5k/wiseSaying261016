@@ -11,7 +11,13 @@ public class Main {
             String cmd = sc.nextLine().trim();
 
             if (cmd.equals("종료")) break;
+            else if (cmd.equals("등록")) {
+                System.out.print("명언 : ");
+                sc.nextLine();
 
+                System.out.print("작가 : ");
+                sc.nextLine();
+            }
         }
     }
 }
