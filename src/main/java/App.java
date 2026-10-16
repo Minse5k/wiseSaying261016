@@ -4,7 +4,7 @@ import java.nio.file.Path;
 import java.util.Scanner;
 
 public class App {
-    int idNum = 1;
+    int lastId = 1;
     Scanner sc = new Scanner(System.in);
     WiseSaying[] wiseArr = new WiseSaying[100];
 
@@ -38,20 +38,20 @@ public class App {
     }
 
     void addWise(String content, String name) throws IOException{
-        System.out.println(idNum + "번 명언이 등록되었습니다.");
+        System.out.println(lastId + "번 명언이 등록되었습니다.");
 
-        wiseArr[idNum - 1] = new WiseSaying(idNum, content, name);
+        wiseArr[lastId - 1] = new WiseSaying(lastId, content, name);
 
-        saveWiseSaying(wiseArr[idNum-1]);
+        saveWiseSaying(wiseArr[lastId -1]);
 
-        idNum += 1;
+        lastId += 1;
     }
 
     void printWise() {
         System.out.println("번호 / 작가 / 명언");
         System.out.println("----------------------");
 
-        for (int i = 99; i >= 0; i--) {
+        for (int i = lastId; i >= 0; i--) {
             if (wiseArr[i] == null) continue;
             System.out.println(wiseArr[i].id + " / " + wiseArr[i].name + " / " + wiseArr[i].content);
         }
@@ -110,7 +110,6 @@ public class App {
 
             String[] json = Files.readString(path).split(",");
 
-
             wiseArr[i-1] = new WiseSaying(parseJsonId(json[0]), parseJsonContent(json[1]), parseJsonText(json[2]));
         }
     }
@@ -128,6 +127,12 @@ public class App {
     String parseJsonText(String jsonLine) {
         String[] parts = jsonLine.split(":");
         return parts[1].trim().substring(1, parts[1].length()-5);
+    }
+
+    void saveLastId() throws IOException {
+        Path path = Path.of("db/wiseSaying/lastId.txt");
+
+        Files.writeString(path, String.valueOf(lastId));
     }
 
     void run() throws IOException{
@@ -148,6 +153,7 @@ public class App {
                     addWise(inputContent(), inputName());
                     break;
                 case "종료":
+                    saveLastId();
                     System.out.println("종료");
                     isFinish = true;
                     break;
