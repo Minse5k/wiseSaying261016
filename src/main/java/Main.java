@@ -75,6 +75,29 @@ public class Main {
                     }
 
                     break;
+                case "수정":
+                    System.out.print("?id=");
+                    int editId = Integer.parseInt(sc.nextLine());
+                    boolean isEdit = false;
+
+                    for (int i = 0; i < wiseList.size(); i++) {
+                        if (editId == wiseList.get(i).id) {
+                            isEdit = true;
+
+                            System.out.printf("명언(기존) : %s\n", wiseList.get(i).content);
+                            System.out.print("명언 : ");
+
+                            wiseList.get(i).content = sc.nextLine();
+
+                            System.out.printf("작가(기존) : %s\n", wiseList.get(i).name);
+                            System.out.print("작가 : ");
+
+                            wiseList.get(i).name = sc.nextLine();
+                        }
+                    }
+
+                    if(!isEdit) System.out.printf("%d번 명언은 존재하지 않습니다.\n", editId);
+                    break;
             }
         }
     }
