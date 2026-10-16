@@ -58,13 +58,22 @@ public class Main {
                 case "삭제":
                     System.out.print("?id=");
                     int removeId = Integer.parseInt(sc.nextLine());
+                    boolean isRemove = false;
 
                     for (int i = 0; i < wiseList.size(); i++) {
                         if (removeId == wiseList.get(i).id) {
+                            isRemove = true;
                             wiseList.remove(i);
-                            System.out.printf("%d번 명언이 삭제되었습니다.\n", removeId);
+                            break;
                         }
                     }
+
+                    if (isRemove) {
+                        System.out.printf("%d번 명언이 삭제되었습니다.\n", removeId);
+                    } else {
+                        System.out.printf("%d번 명언은 존재하지 않습니다.\n", removeId);
+                    }
+
                     break;
             }
         }
