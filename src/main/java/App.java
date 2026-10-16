@@ -40,6 +40,7 @@ public class App {
         System.out.println("----------------------");
 
         for (int i = idNum-2; i >= 0; i--) {
+            if(wisArr[i] == null) continue;
             System.out.println(wisArr[i].id + " / " + wisArr[i].name + " / " + wisArr[i].content);
         }
     }
@@ -48,8 +49,9 @@ public class App {
         System.out.print("?id=");
         int idx = Integer.parseInt(sc.nextLine());
 
-        if(wiseArr[idx] != null) {
-            wiseArr[idx] = null;
+        if(wiseArr[idx - 1] != null) {
+            wiseArr[idx - 1] = null;
+            System.out.println(idx + "번 명언이 삭제되었습니다.");
         }
     }
 
