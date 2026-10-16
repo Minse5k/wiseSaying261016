@@ -12,6 +12,8 @@ public class Main {
             this.name = name;
             this.content = content;
         }
+
+
     }
 
     public static void main(String[] args) {
@@ -21,33 +23,49 @@ public class Main {
         int cnt = 1;
         ArrayList<WiseSaying> wiseList = new ArrayList<WiseSaying>();
 
+        label:
         while (true) {
             System.out.print("명령) ");
 
             String cmd = sc.nextLine().trim();
 
-            if (cmd.equals("종료")) break;
-            else if (cmd.equals("등록")) {
-                int id = cnt;
-                String name;
-                String content;
+            switch (cmd) {
+                case "종료":
+                    break label;
+                case "등록":
+                    int id = cnt;
+                    String name;
+                    String content;
 
-                System.out.print("명언 : ");
-                content = sc.nextLine();
+                    System.out.print("명언 : ");
+                    content = sc.nextLine();
 
-                System.out.print("작가 : ");
-                name = sc.nextLine();
+                    System.out.print("작가 : ");
+                    name = sc.nextLine();
 
-                wiseList.add(new WiseSaying(id, name, content));
+                    wiseList.add(new WiseSaying(id, name, content));
 
-                System.out.printf("%d번 명언이 등록되었습니다.\n", cnt++);
-            } else if (cmd.equals("목록")) {
-                System.out.println("번호 / 작가 / 명언");
-                System.out.println("----------------------");
+                    System.out.printf("%d번 명언이 등록되었습니다.\n", cnt++);
+                    break;
+                case "목록":
+                    System.out.println("번호 / 작가 / 명언");
+                    System.out.println("----------------------");
 
-                for(int i=wiseList.size()-1; i>=0; i--) {
-                    System.out.printf("%d / %s / %s\n", wiseList.get(i).id, wiseList.get(i).name, wiseList.get(i).content);
-                }
+                    for (int i = wiseList.size() - 1; i >= 0; i--) {
+                        System.out.printf("%d / %s / %s\n", wiseList.get(i).id, wiseList.get(i).name, wiseList.get(i).content);
+                    }
+                    break;
+                case "삭제":
+                    System.out.print("?id=");
+                    int removeId = Integer.parseInt(sc.nextLine());
+
+                    for (int i = 0; i < wiseList.size(); i++) {
+                        if (removeId == wiseList.get(i).id) {
+                            wiseList.remove(i);
+                            System.out.printf("%d번 명언이 삭제되었습니다.\n", removeId);
+                        }
+                    }
+                    break;
             }
         }
     }
