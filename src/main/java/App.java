@@ -3,6 +3,7 @@ import java.util.Scanner;
 public class App {
     int idNum = 1;
     Scanner sc = new Scanner(System.in);
+    WiseSaying[] wiseArr = new WiseSaying[100];
 
 
     static class WiseSaying {
@@ -27,25 +28,25 @@ public class App {
         return sc.nextLine();
     }
 
-    void addWise(String content, String name, WiseSaying[] wisArr) {
+    void addWise(String content, String name) {
         System.out.println(idNum + "번 명언이 등록되었습니다.");
 
-        wisArr[idNum -1] = new WiseSaying(idNum, content, name);
+        wiseArr[idNum -1] = new WiseSaying(idNum, content, name);
 
         idNum += 1;
     }
 
-    void printWise(WiseSaying[] wisArr) {
+    void printWise() {
         System.out.println("번호 / 작가 / 명언");
         System.out.println("----------------------");
 
         for (int i = idNum-2; i >= 0; i--) {
-            if(wisArr[i] == null) continue;
-            System.out.println(wisArr[i].id + " / " + wisArr[i].name + " / " + wisArr[i].content);
+            if(wiseArr[i] == null) continue;
+            System.out.println(wiseArr[i].id + " / " + wiseArr[i].name + " / " + wiseArr[i].content);
         }
     }
 
-    void deleteWise(WiseSaying[] wiseArr) {
+    void deleteWise() {
         System.out.print("?id=");
         int idx = Integer.parseInt(sc.nextLine());
 
@@ -62,7 +63,6 @@ public class App {
         System.out.println("== 명언 앱 ==");
 
         boolean isFinish = true;
-        WiseSaying[] wisArr = new WiseSaying[100];
 
         while (isFinish) {
             System.out.print("명령) ");
@@ -71,17 +71,17 @@ public class App {
 
             switch (cmd) {
                 case "등록":
-                    addWise(inputContent(), inputName(), wisArr);
+                    addWise(inputContent(), inputName());
                     break;
                 case "종료":
                     System.out.println("종료");
                     isFinish = false;
                     break;
                 case "목록":
-                    printWise(wisArr);
+                    printWise();
                     break;
                 case "삭제":
-                    deleteWise(wisArr);
+                    deleteWise();
                     break;
             }
         }
