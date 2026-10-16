@@ -1,3 +1,6 @@
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Scanner;
 
 public class App {
@@ -28,10 +31,12 @@ public class App {
         return sc.nextLine();
     }
 
-    void addWise(String content, String name) {
+    void addWise(String content, String name) throws IOException{
         System.out.println(idNum + "번 명언이 등록되었습니다.");
 
-        wiseArr[idNum -1] = new WiseSaying(idNum, content, name);
+        wiseArr[idNum - 1] = new WiseSaying(idNum, content, name);
+
+        saveWiseSaying(wiseArr[idNum-1]);
 
         idNum += 1;
     }
@@ -40,8 +45,8 @@ public class App {
         System.out.println("번호 / 작가 / 명언");
         System.out.println("----------------------");
 
-        for (int i = idNum-2; i >= 0; i--) {
-            if(wiseArr[i] == null) continue;
+        for (int i = idNum - 2; i >= 0; i--) {
+            if (wiseArr[i] == null) continue;
             System.out.println(wiseArr[i].id + " / " + wiseArr[i].name + " / " + wiseArr[i].content);
         }
     }
@@ -50,7 +55,7 @@ public class App {
         System.out.print("?id=");
         int idx = Integer.parseInt(sc.nextLine());
 
-        if(wiseArr[idx - 1] != null) {
+        if (wiseArr[idx - 1] != null) {
             wiseArr[idx - 1] = null;
             System.out.println(idx + "번 명언이 삭제되었습니다.");
         } else {
@@ -62,21 +67,33 @@ public class App {
         System.out.print("?id=");
         int idx = Integer.parseInt(sc.nextLine());
 
-        if(wiseArr[idx-1] == null) {
+        if (wiseArr[idx - 1] == null) {
             System.out.println(idx + "번 명언은 존재하지 않습니다.");
             return;
-        } else {
-            System.out.println("명언(기존) : " + wiseArr[idx-1].content);
-            System.out.print("명언 : ");
-            wiseArr[idx-1].content = sc.nextLine();
-
-            System.out.println("작가(기존) : " + wiseArr[idx-1].name);
-            System.out.print("작가 : ");
-            wiseArr[idx-1].name = sc.nextLine();
         }
+        System.out.println("명언(기존) : " + wiseArr[idx - 1].content);
+        wiseArr[idx - 1].content = inputContent();
+
+        System.out.println("작가(기존) : " + wiseArr[idx - 1].name);
+        wiseArr[idx - 1].name = inputName();
+
     }
 
-    void run() {
+    void saveWiseSaying(WiseSaying wise) throws IOException {
+        Path path = Path.of("db/wiseSaying/" + wise.id +  ".json");
+
+        String json = """
+                {
+                "id": "%d",
+                "content": "%s",
+                "name": "%s"
+                }
+                """.formatted(wise.id, wise.content, wise.name);
+
+        Files.writeString(path, json);
+    }
+
+    void run() throws IOException{
 
         System.out.println("== 명언 앱 ==");
 
