@@ -44,6 +44,12 @@ public class App {
         }
     }
 
+    void deleteWise(WiseSaying[] wiseArr, int idx) {
+        if(wiseArr[idx] != null) {
+            wiseArr[idx] = null;
+        }
+    }
+
     void run() {
 
         System.out.println("== 명언 앱 ==");
