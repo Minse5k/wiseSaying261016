@@ -44,7 +44,10 @@ public class App {
         }
     }
 
-    void deleteWise(WiseSaying[] wiseArr, int idx) {
+    void deleteWise(WiseSaying[] wiseArr) {
+        System.out.print("?id=");
+        int idx = Integer.parseInt(sc.nextLine());
+
         if(wiseArr[idx] != null) {
             wiseArr[idx] = null;
         }
@@ -72,6 +75,9 @@ public class App {
                     break;
                 case "목록":
                     printWise(wisArr);
+                    break;
+                case "삭제":
+                    deleteWise(wisArr);
                     break;
             }
         }
