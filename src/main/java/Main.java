@@ -80,23 +80,27 @@ public class Main {
                     int editId = Integer.parseInt(sc.nextLine());
                     boolean isEdit = false;
 
-                    for (int i = 0; i < wiseList.size(); i++) {
-                        if (editId == wiseList.get(i).id) {
+                    for (WiseSaying wiseSaying : wiseList) {
+                        if (editId == wiseSaying.id) {
                             isEdit = true;
 
-                            System.out.printf("명언(기존) : %s\n", wiseList.get(i).content);
+                            System.out.printf("명언(기존) : %s\n", wiseSaying.content);
                             System.out.print("명언 : ");
 
-                            wiseList.get(i).content = sc.nextLine();
+                            wiseSaying.content = sc.nextLine();
 
-                            System.out.printf("작가(기존) : %s\n", wiseList.get(i).name);
+                            System.out.printf("작가(기존) : %s\n", wiseSaying.name);
                             System.out.print("작가 : ");
 
-                            wiseList.get(i).name = sc.nextLine();
+                            wiseSaying.name = sc.nextLine();
+
+                            break;
                         }
                     }
 
-                    if(!isEdit) System.out.printf("%d번 명언은 존재하지 않습니다.\n", editId);
+                    if (!isEdit) {
+                        System.out.printf("%d번 명언은 존재하지 않습니다.\n", editId);
+                    }
                     break;
             }
         }
