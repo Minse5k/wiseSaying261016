@@ -13,7 +13,7 @@ public class Main1 {
     }
 
     private static void addWise(String content, String Name) {
-
+        System.out.println("1번 명언이 등록되었습니다.");
     }
 
     public static void main(String[] args) {
