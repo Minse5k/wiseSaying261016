@@ -63,19 +63,22 @@ public class App {
         }
     }
 
-    void editWise() {
+    void editWise() throws IOException{
         System.out.print("?id=");
         int idx = Integer.parseInt(sc.nextLine());
+        WiseSaying wise = wiseArr[idx-1];
 
-        if (wiseArr[idx - 1] == null) {
+        if (wise == null) {
             System.out.println(idx + "번 명언은 존재하지 않습니다.");
             return;
         }
-        System.out.println("명언(기존) : " + wiseArr[idx - 1].content);
-        wiseArr[idx - 1].content = inputContent();
+        System.out.println("명언(기존) : " + wise.content);
+        wise.content = inputContent();
 
-        System.out.println("작가(기존) : " + wiseArr[idx - 1].name);
-        wiseArr[idx - 1].name = inputName();
+        System.out.println("작가(기존) : " + wise.name);
+        wise.name = inputName();
+
+        saveWiseSaying(wise);
 
     }
 
