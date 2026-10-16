@@ -52,6 +52,8 @@ public class App {
         if(wiseArr[idx - 1] != null) {
             wiseArr[idx - 1] = null;
             System.out.println(idx + "번 명언이 삭제되었습니다.");
+        } else {
+            System.out.println(idx + "번 명언은 존재하지 않습니다.");
         }
     }
 
