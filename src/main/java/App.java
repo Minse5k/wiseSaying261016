@@ -19,12 +19,6 @@ public class App {
             this.content = content;
             this.name = name;
         }
-
-        public WiseSaying() {
-            this.id = 0;
-            this.content = "";
-            this.name = "";
-        }
     }
 
     String inputContent() {
@@ -51,19 +45,20 @@ public class App {
         System.out.println("번호 / 작가 / 명언");
         System.out.println("----------------------");
 
-        for (int i = lastId; i >= 0; i--) {
+        for (int i = lastId - 2; i >= 0; i--) {
             if (wiseArr[i] == null) continue;
             System.out.println(wiseArr[i].id + " / " + wiseArr[i].name + " / " + wiseArr[i].content);
         }
     }
 
-    void deleteWise() {
+    void deleteWise() throws IOException {
         System.out.print("?id=");
         int idx = Integer.parseInt(sc.nextLine());
 
         if (wiseArr[idx - 1] != null) {
             wiseArr[idx - 1] = null;
             System.out.println(idx + "번 명언이 삭제되었습니다.");
+            deleteJson(idx);
         } else {
             System.out.println(idx + "번 명언은 존재하지 않습니다.");
         }
@@ -103,7 +98,7 @@ public class App {
     }
 
     void setWiseArr() throws IOException{
-        for(int i=1; i<=100; i++) {
+        for(int i=1; i<=lastId; i++) {
             Path path = Path.of("db/wiseSaying/" + i + ".json");
 
             if(!Files.exists(path)) continue;
@@ -143,14 +138,20 @@ public class App {
         lastId = Integer.parseInt(Files.readString(path));
     }
 
+    void deleteJson(int idx) throws IOException{
+        Path path = Path.of("db/wiseSaying/" + idx + ".json");
+
+        Files.deleteIfExists(path);
+    }
+
     void run() throws IOException{
 
         System.out.println("== 명언 앱 ==");
 
         boolean isFinish = false;
 
-        setWiseArr();
         setLastId();
+        setWiseArr();
 
         while (!isFinish) {
             System.out.print("명령) ");
@@ -160,6 +161,7 @@ public class App {
             switch (cmd) {
                 case "등록":
                     addWise(inputContent(), inputName());
+                    saveLastId();
                     break;
                 case "종료":
                     saveLastId();
